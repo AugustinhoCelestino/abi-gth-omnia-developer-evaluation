@@ -4,8 +4,9 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
 {
     public class Product : BaseEntity
     {
+        public string? Code { get; set; }
         public string? Description { get; set; }
-        public int UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
     }
 }
