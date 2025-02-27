@@ -6,7 +6,8 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
     {
         public int SaleNumber { get; set; }
         public DateTime SaleDate { get; set; }
-        public Costumer? CustomerId { get; set; }
+        public Customer? Customer { get; set; }
+        public Guid CustomerId { get; set; }
         public decimal TotalSaleAmount { get; set; }
         public Branch? Branch { get; set; }
         public Guid BranchId { get; set; }        

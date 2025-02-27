@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Mapping;
 
-public class CostumerConfiguration : IEntityTypeConfiguration<Costumer>
+public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Costumer> builder)
+    public void Configure(EntityTypeBuilder<Customer> builder)
     {
         builder.ToTable("Costumers");
 

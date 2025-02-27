@@ -2,7 +2,7 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities
 {
-    public class Costumer : BaseEntity
+    public class Customer : BaseEntity
     {
         public string? Name { get; set; }
 

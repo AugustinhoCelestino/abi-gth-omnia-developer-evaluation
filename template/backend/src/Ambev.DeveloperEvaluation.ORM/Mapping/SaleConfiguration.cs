@@ -19,7 +19,7 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(u => u.CustomerId).IsRequired().HasColumnType("uuid");
         builder.Property(u => u.TotalSaleAmount).IsRequired().HasColumnType("Decimal(18,2)");
         builder.Property(u => u.BranchId).IsRequired().HasColumnType("uuid");
-        builder.Property(u => u.Cancelled).IsRequired().HasColumnType("bit");
+        builder.Property(u => u.Cancelled).IsRequired().HasColumnType("bool");
 
         builder.HasIndex(u => u.SaleNumber);
     }
