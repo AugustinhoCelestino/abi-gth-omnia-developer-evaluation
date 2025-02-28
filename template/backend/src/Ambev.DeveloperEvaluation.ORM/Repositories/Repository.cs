@@ -59,13 +59,11 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
             result = result.Where(where);
 
-            if (includes.Count > 0)
+            if (includes != null)
             {
-                foreach (var include in includes)
-                {
-                    result = include(result);
-                }
+                result = includes(result);
             }
+
             return await result.ToListAsync();
         }
 

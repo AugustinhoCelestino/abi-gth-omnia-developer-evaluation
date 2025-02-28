@@ -16,9 +16,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(u => u.Description).IsRequired().HasMaxLength(100);
         builder.Property(u => u.UnitPrice).IsRequired().HasColumnType("Decimal(18,2)");
-        builder.Property(u => u.Code).IsRequired().HasMaxLength(50);
+        builder.Property(u => u.ProductId).IsRequired().HasMaxLength(50);
 
-        builder.HasIndex(u => u.Code);
+        builder.HasIndex(u => u.ProductId);
         
 
     }
