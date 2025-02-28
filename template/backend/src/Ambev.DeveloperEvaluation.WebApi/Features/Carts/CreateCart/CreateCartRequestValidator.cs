@@ -7,8 +7,8 @@ public class CreateCartRequestValidator : AbstractValidator<CreateCartRequest>
 {
     public CreateCartRequestValidator()
     {
-        RuleFor(cart => cart.UserId).NotEmpty();
-        RuleFor(cart => cart.Date).NotEmpty();
+        RuleFor(cart => cart.UserId).NotEmpty().WithMessage("Cart User ID is required");
+        RuleFor(cart => cart.Date).NotEmpty().WithMessage("Cart Date is required"); ;
         RuleFor(cart => cart.Products).SetValidator(new ProductInCartValidator());
     }
 }

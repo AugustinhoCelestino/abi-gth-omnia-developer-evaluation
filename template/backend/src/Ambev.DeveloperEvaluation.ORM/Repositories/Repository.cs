@@ -88,6 +88,15 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
         public async Task<TEntity?> FindNoTrackingAsync(Expression<Func<TEntity, bool>> where)
         {
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(where);
-        } 
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(int pageSize, int pageNumber, Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
+        {
+            //TODO: set paginated pageSize e pagenumber
+             
+            var result = await DbSet.AsQueryable().AsNoTracking().Where(where).ToListAsync();
+
+            return result;
+        }
     }
 }
