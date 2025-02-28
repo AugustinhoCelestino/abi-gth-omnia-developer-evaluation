@@ -7,17 +7,15 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 /// <summary>
 /// Implementation of IUserRepository using Entity Framework Core
 /// </summary>
-public class UserRepository : IUserRepository
+public class UserRepository : Repository<User, DefaultContext>, IUserRepository
 {
-    private readonly DefaultContext _context;
-
     /// <summary>
     /// Initializes a new instance of UserRepository
     /// </summary>
     /// <param name="context">The database context</param>
-    public UserRepository(DefaultContext context)
+    public UserRepository(DefaultContext context) : base(context)
     {
-        _context = context;
+
     }
 
     /// <summary>
