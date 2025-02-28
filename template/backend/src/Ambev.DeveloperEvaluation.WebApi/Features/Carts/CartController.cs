@@ -8,6 +8,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts;
 
@@ -38,16 +39,16 @@ public class CartController : BaseController
         var command = _mapper.Map<GetAllCartCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
-        var data = _mapper.Map<GetAllCartResponse>(response);
+        var data = _mapper.Map<List<GetAllCartResponse>>(response);
 
-        return Ok(new ApiResponseWithPaginatedData<GetAllCartResponse>
+        return Ok(new ApiResponseWithPaginatedData<List<GetAllCartResponse>>
         {
             Success = true,
             Message = "Cart retrieved successfully",
             Data = data,
             TotalItems = 1,
             CurrentPage = 1,
-            TotalPages = 1            
+            TotalPages = 1
         });
     }
 

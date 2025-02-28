@@ -1,7 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
-using Ambev.DeveloperEvaluation.Common.Validation;
-using FluentValidation;
-using MediatR;
+﻿using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 {
