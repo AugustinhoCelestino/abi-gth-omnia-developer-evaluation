@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSalesEntities : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,7 +54,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ProductId = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     UnitPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false)
                 },
@@ -69,7 +69,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     SaleNumber = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
-                    SaleDate = table.Column<DateTime>(type: "DateTime", nullable: false, defaultValueSql: "GetDate()"),
+                    SaleDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
                     TotalSaleAmount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     BranchId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -126,9 +126,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 column: "Code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_Code",
+                name: "IX_Products_ProductId",
                 table: "Products",
-                column: "Code");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleItems_ProductId",

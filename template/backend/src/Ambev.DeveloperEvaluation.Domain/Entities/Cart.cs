@@ -2,11 +2,11 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities
 {
-    public class Cart : BaseEntity
+    public class Cart
     {
-        public int CartId { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
-        public ICollection<Product>? Products { get; set; }
+        public ICollection<CartItem>? CartItems { get; set; }
     }
 }

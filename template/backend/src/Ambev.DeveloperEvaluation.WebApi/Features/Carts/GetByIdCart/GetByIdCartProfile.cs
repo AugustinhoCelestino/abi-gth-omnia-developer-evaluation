@@ -8,6 +8,7 @@ public class GetByIdCartProfile : Profile
     public GetByIdCartProfile()
     {
         CreateMap<GetByIdCartRequest, GetByIdCartCommand>();
+        CreateMap<GetByIdCartRequest, GetByIdCartCommand>();
         CreateMap<GetByIdCartResult, GetByIdCartResponse>();
     }
 

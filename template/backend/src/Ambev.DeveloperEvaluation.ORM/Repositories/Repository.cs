@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories
 {
-    public abstract class Repository<TEntity, TContext> : IRepository<TEntity>  where TEntity : BaseEntity where TContext : DbContext
+    public abstract class Repository<TEntity, TContext> : IRepository<TEntity>  where TEntity : class where TContext : DbContext
     {
         protected readonly TContext _context;
         protected Repository(TContext context)
@@ -84,6 +84,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
         public async Task<TEntity?> FindNoTrackingAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
         {
+            var a = DbSet.ToList();
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(where);
         }
 

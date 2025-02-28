@@ -15,7 +15,7 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
 
         builder.Property(u => u.SaleNumber).IsRequired().HasMaxLength(50);
-        builder.Property(u => u.SaleDate).IsRequired().HasColumnType("DateTime").HasDefaultValueSql("GetDate()");
+        builder.Property(u => u.SaleDate).IsRequired();
         builder.Property(u => u.CustomerId).IsRequired().HasColumnType("uuid");
         builder.Property(u => u.TotalSaleAmount).IsRequired().HasColumnType("Decimal(18,2)");
         builder.Property(u => u.BranchId).IsRequired().HasColumnType("uuid");

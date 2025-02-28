@@ -84,7 +84,7 @@ public class CartController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetByIdCartCommand>(request.Id);
+        var command = _mapper.Map<GetByIdCartCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(new ApiResponseWithData<GetByIdCartResponse>
