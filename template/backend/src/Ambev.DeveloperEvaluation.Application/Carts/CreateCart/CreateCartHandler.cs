@@ -3,7 +3,6 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart
 {
@@ -27,8 +26,9 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart
             var cart = _mapper.Map<Cart>(command);
 
             var createdCart = await _repository.CreateAsync(cart, cancellationToken);
+            var result = _mapper.Map<CreateCartResult>(createdCart);
 
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

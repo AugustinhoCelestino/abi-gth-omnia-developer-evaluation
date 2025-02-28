@@ -10,5 +10,5 @@ public class CreateCartResponse
 
     public DateTime Date { get; set; }
 
-    public Product? Products { get; set; }
+    public CartItem? Products { get; set; }
 }

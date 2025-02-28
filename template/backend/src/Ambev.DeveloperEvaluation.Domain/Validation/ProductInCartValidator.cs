@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Validation
 {
-    public class ProductInCartValidator : AbstractValidator<SaleItem>
+    public class ProductInCartValidator : AbstractValidator<CartItem>
     {
         public ProductInCartValidator()
         {
