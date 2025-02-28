@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Validation
 {
-    public class ProductInCartValidator : AbstractValidator<CartItem>
+    public class CartItemValidator : AbstractValidator<CartItem>
     {
-        public ProductInCartValidator()
+        public CartItemValidator()
         {
             RuleFor(product => product.ProductId)
                 .NotEmpty()

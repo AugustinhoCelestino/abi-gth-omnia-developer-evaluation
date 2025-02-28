@@ -12,6 +12,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Mapping
 
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id);
+
             builder.Property(u => u.CartId);
             builder.Property(u => u.ProductId);
             builder.Property(u => u.Quantity);

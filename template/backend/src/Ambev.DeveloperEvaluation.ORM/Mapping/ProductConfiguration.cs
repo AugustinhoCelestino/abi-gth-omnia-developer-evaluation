@@ -1,25 +1,26 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Text.RegularExpressions;
 
-namespace Ambev.DeveloperEvaluation.ORM.Mapping;
-
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+namespace Ambev.DeveloperEvaluation.ORM.Mapping
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
-        builder.ToTable("Products");
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.ToTable("Products");
 
-        builder.HasKey(u => u.Id);
-        builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
+            builder.HasKey(u => u.Id);
+            builder.Property(u => u.Id);
 
-        builder.Property(u => u.Description).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.UnitPrice).IsRequired().HasColumnType("Decimal(18,2)");
-        builder.Property(u => u.ProductId).IsRequired().HasMaxLength(50);
+            builder.Property(u => u.Title);
+            builder.Property(u => u.Price);
+            builder.Property(u => u.Description);
+            builder.Property(u => u.Category);
+            builder.Property(u => u.Image);
+            builder.Property(u => u.Rate);
+            builder.Property(u => u.Count);
 
-        builder.HasIndex(u => u.ProductId);
-        
-
+        }
     }
 }

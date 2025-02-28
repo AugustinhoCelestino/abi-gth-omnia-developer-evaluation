@@ -1,31 +1,33 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Text.RegularExpressions;
 
-namespace Ambev.DeveloperEvaluation.ORM.Mapping;
-
-public class UserConfiguration : IEntityTypeConfiguration<User>
+namespace Ambev.DeveloperEvaluation.ORM.Mapping
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        builder.ToTable("Users");
+        public void Configure(EntityTypeBuilder<User> builder)
+        {
+            builder.ToTable("Users");
 
-        builder.HasKey(u => u.Id);
-        builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
+            builder.HasKey(u => u.Id);
+            builder.Property(u => u.Id);
 
-        builder.Property(u => u.Username).IsRequired().HasMaxLength(50);
-        builder.Property(u => u.Password).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.Phone).HasMaxLength(20);
+            builder.Property(u => u.Email);
+            builder.Property(u => u.Username);
+            builder.Property(u => u.Password);
+            builder.Property(u => u.Firstname);
+            builder.Property(u => u.Lastname);
+            builder.Property(u => u.City);
+            builder.Property(u => u.Street);
+            builder.Property(u => u.Number);
+            builder.Property(u => u.Zipcode);
+            builder.Property(u => u.Phone);
+            builder.Property(u => u.Status);
+            builder.Property(u => u.Role);
+            builder.Property(u => u.Lat);
+            builder.Property(u => u.Long);
 
-        builder.Property(u => u.Status)
-            .HasConversion<string>()
-            .HasMaxLength(20);
-
-        builder.Property(u => u.Role)
-            .HasConversion<string>()
-            .HasMaxLength(20);
-
+        }
     }
 }

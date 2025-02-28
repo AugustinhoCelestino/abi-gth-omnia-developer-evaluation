@@ -9,5 +9,5 @@ public class CreateCartRequest
 
     public DateTime Date { get; set; }
 
-    public CartItem Products { get; set; } = new CartItem();
+    public List<CartItem>? CartItem { get; set; }
 }

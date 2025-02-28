@@ -84,7 +84,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
         public async Task<TEntity?> FindNoTrackingAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
         {
-            var a = DbSet.ToList();
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(where);
         }
 

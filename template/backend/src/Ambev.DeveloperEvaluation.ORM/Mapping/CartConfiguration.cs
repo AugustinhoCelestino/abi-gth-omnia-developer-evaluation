@@ -12,6 +12,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Mapping
 
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id);
+
             builder.Property(u => u.UserId);
             builder.Property(u => u.Date);
         }
