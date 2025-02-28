@@ -1,12 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
-using Ambev.DeveloperEvaluation.Common.Validation;
-using FluentValidation;
+﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 {
@@ -16,7 +9,9 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 
         public int PageSize { get; set; } = 10;
 
-        public string? OrderBy { get; set; }
+        public bool OrderByDesc { get; set; } = false;
+
+        public List<string>? OrderBy { get; set; } = new List<string> { "Id", "UserId" };
 
         public ValidationResultDetail Validate()
         {

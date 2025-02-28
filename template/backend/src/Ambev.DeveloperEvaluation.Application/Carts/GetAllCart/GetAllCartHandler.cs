@@ -23,11 +23,17 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
                 throw new ValidationException(validationResult.Errors);
 
             //TODO: set paginated and filtering
-            
+
+            var filtedby = new List<System.Linq.Expressions.Expression<Func<Domain.Entities.Cart, bool>>>();
+            var orderby = new List<System.Linq.Expressions.Expression<Func<Domain.Entities.Cart, object>>>();
+
             var CartsPaginated = 
                 await _repository.GetAllPaginatedAsync(
-                    command.PageSize, command.PageNumber, 
-                    (x => x.CartId != 0), 
+                    filtedby,
+                    command.PageNumber,
+                    command.PageSize,
+                    orderby,
+                    command.OrderByDesc,
                     cancellationToken);
 
             var result = _mapper.Map<GetAllCartResult>(CartsPaginated);

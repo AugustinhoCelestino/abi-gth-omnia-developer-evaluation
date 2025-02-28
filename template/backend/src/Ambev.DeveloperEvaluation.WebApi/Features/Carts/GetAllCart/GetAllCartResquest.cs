@@ -9,5 +9,7 @@ public class GetAllCartRequest
 
     public int PageSize { get; set; } = 10;
 
-    public string? OrderBy { get; set; }
+    public bool OrderByDesc { get; set; } = false;
+
+    public List<string>? OrderBy { get; set; } = new List<string>{"Id","UserId"};
 }

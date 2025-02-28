@@ -1,6 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories
@@ -48,11 +50,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             return model;
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<TEntity>> Select(Expression<Func<TEntity, bool>> where, Func<IQueryable<TEntity>, IQueryable<TEntity>> includes)
         {
             var result = DbSet.AsQueryable().AsNoTracking();
@@ -85,18 +82,43 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
         }
 
-        public async Task<TEntity?> FindNoTrackingAsync(Expression<Func<TEntity, bool>> where)
+        public async Task<TEntity?> FindNoTrackingAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
         {
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(where);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(int pageSize, int pageNumber, Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(List<Expression<Func<TEntity, bool>>> filters, int pageNumber, int pageSize, List<Expression<Func<TEntity, object>>> orderBy, bool descending, CancellationToken cancellationToken)
         {
-            //TODO: set paginated pageSize e pagenumber
-             
-            var result = await DbSet.AsQueryable().AsNoTracking().Where(where).ToListAsync();
+            var result = DbSet.AsNoTracking().AsQueryable();
 
-            return result;
+            foreach (var filter in filters)
+            {
+                result = result.Where(filter);
+            }
+
+            if (orderBy != null && orderBy.Any()){
+                result = orderBy.Aggregate(
+                    (IQueryable<TEntity>) result, 
+                    (current, order) => current is IOrderedQueryable<TEntity> ordened
+                    ? (descending ? ordened.ThenByDescending(order) : ordened.ThenBy(order))
+                    : (descending ? current.OrderByDescending(order) : current.OrderBy(order)));
+            }
+
+            if (orderBy != null && orderBy.Any())
+            {
+                result.OrderByDescending(ob => new { orderBy });
+            }
+
+            result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            return await result.ToListAsync();
         }
+
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
