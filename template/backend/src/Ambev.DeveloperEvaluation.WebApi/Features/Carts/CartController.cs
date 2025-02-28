@@ -38,11 +38,13 @@ public class CartController : BaseController
         var command = _mapper.Map<GetAllCartCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
+        var data = _mapper.Map<GetAllCartResponse>(response);
+
         return Ok(new ApiResponseWithPaginatedData<GetAllCartResponse>
         {
             Success = true,
             Message = "Cart retrieved successfully",
-            Data = _mapper.Map<GetAllCartResponse>(response),
+            Data = data,
             TotalItems = 1,
             CurrentPage = 1,
             TotalPages = 1            

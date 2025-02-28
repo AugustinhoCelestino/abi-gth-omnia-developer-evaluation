@@ -17,6 +17,16 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
         public DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
+
+        public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+        {
+            var result = DbSet.AsNoTracking().AsQueryable();
+
+            result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            return await result.ToListAsync();
+        }
+
         public async Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             await DbSet.AddAsync(model, cancellationToken);
@@ -87,32 +97,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(where);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(List<Expression<Func<TEntity, bool>>> filters, int pageNumber, int pageSize, List<Expression<Func<TEntity, object>>> orderBy, bool descending, CancellationToken cancellationToken)
-        {
-            var result = DbSet.AsNoTracking().AsQueryable();
 
-            foreach (var filter in filters)
-            {
-                result = result.Where(filter);
-            }
-
-            if (orderBy != null && orderBy.Any()){
-                result = orderBy.Aggregate(
-                    (IQueryable<TEntity>) result, 
-                    (current, order) => current is IOrderedQueryable<TEntity> ordened
-                    ? (descending ? ordened.ThenByDescending(order) : ordened.ThenBy(order))
-                    : (descending ? current.OrderByDescending(order) : current.OrderBy(order)));
-            }
-
-            if (orderBy != null && orderBy.Any())
-            {
-                result.OrderByDescending(ob => new { orderBy });
-            }
-
-            result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
-            return await result.ToListAsync();
-        }
 
 
         public void Dispose()

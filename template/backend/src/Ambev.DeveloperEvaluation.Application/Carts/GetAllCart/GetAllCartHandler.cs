@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 {
-    public class GetAllCartHandler : IRequestHandler<GetAllCartCommand, GetAllCartResult>
+    public class GetAllCartHandler : IRequestHandler<GetAllCartCommand, List<GetAllCartResult>>
     {
         private readonly ICartRepository _repository;
         private readonly IMapper _mapper;
@@ -14,7 +14,7 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
             _repository = cartRepository;
             _mapper = mapper;
         }
-        public async Task<GetAllCartResult> Handle(GetAllCartCommand command, CancellationToken cancellationToken)
+        public async Task<List<GetAllCartResult>> Handle(GetAllCartCommand command, CancellationToken cancellationToken)
         {
             var validator = new GetAllCartCommandValidator();
             var validationResult = await validator.ValidateAsync(command, cancellationToken);
@@ -22,21 +22,13 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-            //TODO: set paginated and filtering
-
-            var filtedby = new List<System.Linq.Expressions.Expression<Func<Domain.Entities.Cart, bool>>>();
-            var orderby = new List<System.Linq.Expressions.Expression<Func<Domain.Entities.Cart, object>>>();
-
-            var CartsPaginated = 
+            var cartsList = 
                 await _repository.GetAllPaginatedAsync(
-                    filtedby,
                     command.PageNumber,
                     command.PageSize,
-                    orderby,
-                    command.OrderByDesc,
                     cancellationToken);
 
-            var result = _mapper.Map<GetAllCartResult>(CartsPaginated);
+            var result = _mapper.Map<List<GetAllCartResult>>(cartsList);
 
             return result;
         }

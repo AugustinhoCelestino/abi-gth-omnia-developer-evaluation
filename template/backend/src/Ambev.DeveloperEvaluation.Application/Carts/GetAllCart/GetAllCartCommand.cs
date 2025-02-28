@@ -3,15 +3,11 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 {
-    public class GetAllCartCommand : IRequest<GetAllCartResult>
+    public class GetAllCartCommand : IRequest<List<GetAllCartResult>>
     {
         public int PageNumber { get; set; } = 1;
 
         public int PageSize { get; set; } = 10;
-
-        public bool OrderByDesc { get; set; } = false;
-
-        public List<string>? OrderBy { get; set; } = new List<string> { "Id", "UserId" };
 
         public ValidationResultDetail Validate()
         {
