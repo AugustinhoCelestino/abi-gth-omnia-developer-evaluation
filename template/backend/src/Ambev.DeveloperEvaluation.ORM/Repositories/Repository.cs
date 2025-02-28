@@ -27,6 +27,13 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             return await result.ToListAsync();
         }
 
+        public async Task<int> GetTotalCount()
+        {
+            var result = DbSet.AsQueryable();
+
+            return await result.CountAsync();
+        }
+
         public async Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             await DbSet.AddAsync(model, cancellationToken);

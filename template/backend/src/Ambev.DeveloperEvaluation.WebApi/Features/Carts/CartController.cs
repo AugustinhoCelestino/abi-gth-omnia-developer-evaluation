@@ -37,19 +37,14 @@ public class CartController : BaseController
             return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<GetAllCartCommand>(request);
+
         var response = await _mediator.Send(command, cancellationToken);
 
-        var data = _mapper.Map<List<GetAllCartResponse>>(response);
+        var data = _mapper.Map<List<GetAllCartResponse>>(response.Data);
 
-        return Ok(new ApiResponseWithPaginatedData<List<GetAllCartResponse>>
-        {
-            Success = true,
-            Message = "Cart retrieved successfully",
-            Data = data,
-            TotalItems = 1,
-            CurrentPage = 1,
-            TotalPages = 1
-        });
+        PaginatedList<GetAllCartResponse> result = new PaginatedList<GetAllCartResponse>(data, response.TotalCount, command.PageNumber, command.PageSize);
+
+        return OkPaginated(result);
     }
 
     [HttpPost]

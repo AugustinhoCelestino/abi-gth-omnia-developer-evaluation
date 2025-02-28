@@ -1,11 +1,12 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
+﻿using Ambev.DeveloperEvaluation.Application.PagnatedResult;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 {
-    public class GetAllCartHandler : IRequestHandler<GetAllCartCommand, List<GetAllCartResult>>
+    public class GetAllCartHandler : IRequestHandler<GetAllCartCommand, PagnatedResult<List<GetAllCartResult>>>
     {
         private readonly ICartRepository _repository;
         private readonly IMapper _mapper;
@@ -14,15 +15,17 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
             _repository = cartRepository;
             _mapper = mapper;
         }
-        public async Task<List<GetAllCartResult>> Handle(GetAllCartCommand command, CancellationToken cancellationToken)
+        public async Task<PagnatedResult<List<GetAllCartResult>>> Handle(GetAllCartCommand command, CancellationToken cancellationToken)
         {
+            PagnatedResult<List<GetAllCartResult>> resultList = new();
+
             var validator = new GetAllCartCommandValidator();
             var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-            var cartsList = 
+            var cartsList =
                 await _repository.GetAllPaginatedAsync(
                     command.PageNumber,
                     command.PageSize,
@@ -30,7 +33,11 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 
             var result = _mapper.Map<List<GetAllCartResult>>(cartsList);
 
-            return result;
+            resultList.Data = result;
+
+            resultList.TotalCount = await _repository.GetTotalCount();
+
+            return resultList;
         }
     }
 }
