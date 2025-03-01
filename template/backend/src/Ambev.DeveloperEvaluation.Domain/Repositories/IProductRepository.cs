@@ -2,7 +2,7 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Repositories;
 
-public interface IProductRepository : IRepository<Product>
+public interface IProductRepository
 {
-
+    Task<IEnumerable<Product>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
 }

@@ -17,7 +17,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
 
         public DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
-
         public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var result = DbSet.AsNoTracking().AsQueryable();

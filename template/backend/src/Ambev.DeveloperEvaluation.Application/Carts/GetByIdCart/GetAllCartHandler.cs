@@ -22,7 +22,7 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-            var cart = await _repository.FindNoTrackingAsync((fi => fi.Id == command.Id), cancellationToken);
+            var cart = await _repository.GetByIdAsync(command.Id, cancellationToken);
             if (cart == null)
                 throw new KeyNotFoundException($"ID {command.Id} not found");
 
