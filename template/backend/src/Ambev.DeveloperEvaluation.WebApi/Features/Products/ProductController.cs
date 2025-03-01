@@ -1,8 +1,8 @@
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
-using Ambev.DeveloperEvaluation.Application.Products.PostProduct;
+using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.PostProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,24 +45,24 @@ public class ProductController : BaseController
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ApiResponseWithData<PostProductResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponseWithData<CreateProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateProduct([FromBody] PostProductRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
     {
-        var validator = new PostProductRequestValidator();
+        var validator = new CreateProductRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<PostProductCommand>(request);
+        var command = _mapper.Map<CreateProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
-        return Created(string.Empty, new ApiResponseWithData<PostProductResponse>
+        return Created(string.Empty, new ApiResponseWithData<CreateProductResponse>
         {
             Success = true,
             Message = "Product created successfully",
-            Data = _mapper.Map<PostProductResponse>(response)
+            Data = _mapper.Map<CreateProductResponse>(response)
         });
     }
 }

@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.PostProduct
+namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct
 {
-    public class PostProductCommandValidator : AbstractValidator<PostProductCommand>
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
-        public PostProductCommandValidator()
+        public CreateProductCommandValidator()
         {
             RuleFor(product => product.Title).NotEmpty().WithMessage("Title is required");
             RuleFor(product => product.Price).NotEmpty().WithMessage("Price is required");

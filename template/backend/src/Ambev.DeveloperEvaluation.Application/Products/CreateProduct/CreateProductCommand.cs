@@ -2,9 +2,9 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.PostProduct
+namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct
 {
-    public class PostProductCommand : IRequest<PostProductResult>
+    public class CreateProductCommand : IRequest<CreateProductResult>
     {
         public string Title { get; set; } = string.Empty;
         public decimal Price { get; set; }
@@ -15,7 +15,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.PostProduct
 
         public ValidationResultDetail Validate()
         {
-            var validator = new PostProductCommandValidator();
+            var validator = new CreateProductCommandValidator();
             var result = validator.Validate(this);
             return new ValidationResultDetail
             {

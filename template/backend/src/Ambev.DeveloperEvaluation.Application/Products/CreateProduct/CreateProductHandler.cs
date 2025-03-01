@@ -4,20 +4,20 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.PostProduct
+namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct
 {
-    public class PostProductHandler : IRequestHandler<PostProductCommand, PostProductResult>
+    public class CreateProductHandler : IRequestHandler<CreateProductCommand, CreateProductResult>
     {
         private readonly IProductRepository _repository;
         private readonly IMapper _mapper;
-        public PostProductHandler(IProductRepository ProductRepository, IMapper mapper)
+        public CreateProductHandler(IProductRepository ProductRepository, IMapper mapper)
         {
             _repository = ProductRepository;
             _mapper = mapper;
         }
-        public async Task<PostProductResult> Handle(PostProductCommand command, CancellationToken cancellationToken)
+        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var validator = new PostProductCommandValidator();
+            var validator = new CreateProductCommandValidator();
             var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
@@ -26,7 +26,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.PostProduct
             var Product = _mapper.Map<Product>(command);
 
             var createdProduct = await _repository.CreateAsync(Product, cancellationToken);
-            var result = _mapper.Map<PostProductResult>(createdProduct);
+            var result = _mapper.Map<CreateProductResult>(createdProduct);
 
             return result;
         }

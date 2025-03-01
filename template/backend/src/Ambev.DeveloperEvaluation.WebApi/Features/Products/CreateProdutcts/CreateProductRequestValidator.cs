@@ -1,11 +1,11 @@
 using Ambev.DeveloperEvaluation.Domain.Validation;
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.PostProduct;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 
-public class PostProductRequestValidator : AbstractValidator<PostProductRequest>
+public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
-    public PostProductRequestValidator()
+    public CreateProductRequestValidator()
     {
         RuleFor(product => product.Title).NotEmpty().WithMessage("Title is required");
         RuleFor(product => product.Price).NotEmpty().WithMessage("Price is required");
