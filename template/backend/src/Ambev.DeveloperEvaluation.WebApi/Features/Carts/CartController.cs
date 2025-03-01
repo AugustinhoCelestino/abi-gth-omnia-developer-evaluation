@@ -26,7 +26,7 @@ public class CartController : BaseController
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ApiResponseWithPaginatedData<GetAllCartResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(PaginatedList<GetAllCartResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllCart([FromQuery] GetAllCartRequest request, CancellationToken cancellationToken)
     {
@@ -42,7 +42,7 @@ public class CartController : BaseController
 
         var data = _mapper.Map<List<GetAllCartResponse>>(response.Data);
 
-        PaginatedList<GetAllCartResponse> result = new PaginatedList<GetAllCartResponse>(data, response.TotalCount, command.PageNumber, command.PageSize);
+        var result = new PaginatedList<GetAllCartResponse>(data, response.TotalCount, command.PageNumber, command.PageSize);
 
         return OkPaginated(result);
     }

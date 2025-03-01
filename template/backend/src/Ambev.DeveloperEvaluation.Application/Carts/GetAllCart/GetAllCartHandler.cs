@@ -17,8 +17,6 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
         }
         public async Task<PagnatedResult<List<GetAllCartResult>>> Handle(GetAllCartCommand command, CancellationToken cancellationToken)
         {
-            PagnatedResult<List<GetAllCartResult>> resultList = new();
-
             var validator = new GetAllCartCommandValidator();
             var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
@@ -32,6 +30,9 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
                     cancellationToken);
 
             var result = _mapper.Map<List<GetAllCartResult>>(cartsList);
+
+
+            PagnatedResult<List<GetAllCartResult>> resultList = new();
 
             resultList.Data = result;
 

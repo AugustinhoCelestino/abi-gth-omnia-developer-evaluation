@@ -18,8 +18,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Mapping
             builder.Property(u => u.Description);
             builder.Property(u => u.Category);
             builder.Property(u => u.Image);
-            builder.Property(u => u.Rate);
-            builder.Property(u => u.Count);
 
         }
     }

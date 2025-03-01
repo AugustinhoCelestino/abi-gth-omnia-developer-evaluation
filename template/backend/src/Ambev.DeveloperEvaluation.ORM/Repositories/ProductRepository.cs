@@ -20,4 +20,17 @@ public class ProductRepository : IProductRepository
 
         return await result.ToListAsync();
     }
+    public async Task<int> GetTotalCount()
+    {
+        var result = _context.Product.AsQueryable();
+
+        return await result.CountAsync();
+    }
+    public async Task<Product> CreateAsync(Product model, CancellationToken cancellationToken = default)
+    {
+        await _context.Product.AddAsync(model, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return model;
+    }
 }

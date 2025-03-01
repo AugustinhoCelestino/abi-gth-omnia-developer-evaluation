@@ -1,9 +1,10 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
+﻿using Ambev.DeveloperEvaluation.Application.PagnatedResult;
+using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Products.GetAllProduct
 {
-    public class GetAllProductCommand : IRequest<List<GetAllProductResult>>
+    public class GetAllProductCommand : IRequest<PagnatedResult<List<GetAllProductResult>>>
     {
         public int PageNumber { get; set; } = 1;
 
