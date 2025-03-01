@@ -13,7 +13,8 @@ namespace Ambev.DeveloperEvaluation.Domain.Repositories
         Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default);
         Task<TEntity> DeleteAsync(TEntity model, CancellationToken cancellationToken = default);
         Task<TEntity?> FindNoTrackingAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default);
-        Task<IEnumerable<TEntity>> GetAllAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default);        Task<IEnumerable<TEntity>> Select(System.Linq.Expressions.Expression<Func<TEntity, bool>> where, Func<IQueryable<TEntity>, IQueryable<TEntity>> includes);
+        Task<IEnumerable<TEntity>> GetAllAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default);        
+        Task<IEnumerable<TEntity>> Select(System.Linq.Expressions.Expression<Func<TEntity, bool>> where, Func<IQueryable<TEntity>, IQueryable<TEntity>> includes);
         Task<IEnumerable<TEntity>> SelectMany(List<System.Linq.Expressions.Expression<Func<TEntity, bool>>> where, Func<IQueryable<TEntity>, IQueryable<TEntity>> includes);
         Task<TEntity> UpdateAsync(TEntity model, CancellationToken cancellationToken = default);
         Task<int> GetTotalCount();
