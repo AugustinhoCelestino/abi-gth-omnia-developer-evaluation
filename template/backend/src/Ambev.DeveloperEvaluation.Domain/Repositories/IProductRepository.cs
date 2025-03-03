@@ -8,6 +8,7 @@ public interface IProductRepository
     Task<bool> DeleteAsync(Product model, CancellationToken cancellationToken = default);
     Task<List<string?>> GetAllCategories(CancellationToken cancellationToken = default);
     Task<IEnumerable<Product>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<IEnumerable<Product>> GetAllPaginatedFiltredByCategoryAsync(int pageNumber, int pageSize, string category, CancellationToken cancellationToken);
     Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<int> GetTotalCount();
     Task<Product> UpdateAsync(Product model, CancellationToken cancellationToken = default);

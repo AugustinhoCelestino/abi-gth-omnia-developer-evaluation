@@ -2,11 +2,13 @@ using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetAllCategories;
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetAllProductFiltredByCategory;
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProductFiltredByCategory;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
 using AutoMapper;
 using MediatR;
@@ -138,4 +140,25 @@ public class ProductsController : BaseController
         return Ok(data);
     }
 
+    [HttpGet("categories/{category}")]
+    [ProducesResponseType(typeof(PaginatedList<GetAllProductFiltredByCategoryResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllProductFiltredByCategory([FromQuery] GetAllProductFiltredByCategoryRequest request, [FromRoute] string category, CancellationToken cancellationToken)
+    {
+        var validator = new GetAllProductFiltredByCategoryRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<GetAllProductFiltredByCategoryCommand>(request);
+
+        var response = await _mediator.Send(command, cancellationToken);
+
+        var data = _mapper.Map<List<GetAllProductFiltredByCategoryResponse>>(response.Data);
+
+        var result = new PaginatedList<GetAllProductFiltredByCategoryResponse>(data, response.TotalCount, command.PageNumber, command.PageSize);
+
+        return OkPaginated(result);
+    }
 }

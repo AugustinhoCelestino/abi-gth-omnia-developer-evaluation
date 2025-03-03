@@ -57,7 +57,6 @@ public class ProductRepository : IProductRepository
 
         return true;
     }
-
     public async Task<List<string?>> GetAllCategories(CancellationToken cancellationToken = default)
     {
         var result =
@@ -66,4 +65,17 @@ public class ProductRepository : IProductRepository
 
         return await result.ToListAsync();
     }
+    public async Task<IEnumerable<Product>> GetAllPaginatedFiltredByCategoryAsync(int pageNumber, int pageSize, string category, CancellationToken cancellationToken)
+    {
+        var result = _context.Products.AsNoTracking().AsQueryable();
+
+        result = result.Where(x => x.Category == category);
+
+        result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+        result = result.Include(x => x.Rating);
+
+        return await result.ToListAsync();
+    }
+
 }
