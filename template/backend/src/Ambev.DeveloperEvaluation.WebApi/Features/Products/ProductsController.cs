@@ -105,30 +105,6 @@ public class ProductsController : BaseController
         });
     }
 
-
-    [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteProduct([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        var request = new DeleteProductRequest { Id = id };
-
-        var validator = new DeleteProductRequestValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            return BadRequest(validationResult.Errors);
-
-        var command = _mapper.Map<DeleteProductCommand>(request);
-        await _mediator.Send(command, cancellationToken);
-
-        return Ok(new ApiResponse
-        {
-            Success = true,
-            Message = "Product deleted successfully"
-        });
-    }
-
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -151,6 +127,29 @@ public class ProductsController : BaseController
             Success = true,
             Message = "Product updated successfully",
             Data = _mapper.Map<UpdateProductResponse>(response)
+        });
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteProduct([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var request = new DeleteProductRequest { Id = id };
+
+        var validator = new DeleteProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<DeleteProductCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "Product deleted successfully"
         });
     }
 

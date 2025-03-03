@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -12,9 +13,11 @@ public class ProductRepository : IProductRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Product>> GetAllPaginatedAsync(int pageNumber, int pageSize, Expression<Func<Product, object>> orderBy, bool descending = false, CancellationToken cancellationToken = default)
     {
         var result = _context.Products.AsNoTracking().AsQueryable();
+
+        result = descending ? result.OrderByDescending(orderBy) : result.OrderBy(orderBy);
 
         result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
@@ -64,7 +67,7 @@ public class ProductRepository : IProductRepository
 
         return await result.ToListAsync();
     }
-    public async Task<IEnumerable<Product>> GetAllPaginatedFiltredByCategoryAsync(int pageNumber, int pageSize, string category, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Product>> GetAllPaginatedFiltredByCategoryAsync(int pageNumber, int pageSize, string category, CancellationToken cancellationToken = default)
     {
         var result = _context.Products.AsNoTracking().AsQueryable();
 
