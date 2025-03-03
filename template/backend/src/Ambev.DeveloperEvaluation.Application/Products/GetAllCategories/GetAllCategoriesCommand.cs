@@ -1,18 +1,14 @@
-﻿using Ambev.DeveloperEvaluation.Application.Model;
+﻿using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
+namespace Ambev.DeveloperEvaluation.Application.Products.GetAllCategories
 {
-    public class GetAllCartCommand : IRequest<PagnatedResult<List<GetAllCartResult>>>
+    public class GetAllCategoriesCommand: IRequest<GetAllCategoriesResult>
     {
-        public int PageNumber { get; set; } = 1;
-
-        public int PageSize { get; set; } = 10;
-
         public ValidationResultDetail Validate()
         {
-            var validator = new GetAllCartCommandValidator();
+            var validator = new GetAllCategoriesCommandValidator();
             var result = validator.Validate(this);
             return new ValidationResultDetail
             {

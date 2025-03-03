@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.PagnatedResult;
+﻿using Ambev.DeveloperEvaluation.Application.Model;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;

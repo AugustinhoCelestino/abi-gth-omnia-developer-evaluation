@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.PagnatedResult
+﻿namespace Ambev.DeveloperEvaluation.Application.Model
 {
     public class PagnatedResult<T>
     {

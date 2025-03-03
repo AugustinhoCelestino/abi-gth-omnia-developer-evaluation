@@ -1,6 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.GetAllCart;
-using Ambev.DeveloperEvaluation.Application.PagnatedResult;
-using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Model;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;
@@ -25,7 +23,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.GetAllProduct
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-            IEnumerable<Domain.Entities.Product> ProductsList =
+            var ProductsList =
                 await _repository.GetAllPaginatedAsync(
                     command.PageNumber,
                     command.PageSize,

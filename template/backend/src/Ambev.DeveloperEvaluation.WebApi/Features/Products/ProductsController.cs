@@ -1,27 +1,28 @@
-using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetAllCategories;
+using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
-using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
-using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
 [ApiController]
-[Route("api/[controller]")]
-public class ProductController : BaseController
+[Route("[controller]")]
+public class ProductsController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    public ProductController(IMediator mediator, IMapper mapper)
+    public ProductsController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -100,28 +101,41 @@ public class ProductController : BaseController
         });
     }
 
-    [HttpPut("{id}")]
-    [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status201Created)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductViewModel request, [FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteProduct([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var productToUpdate = _mapper.Map<UpdateProductRequest>(request);
-        productToUpdate.Id = id;
+        var request = new DeleteProductRequest { Id = id };
 
-        var validator = new UpdateProductRequestValidator();
-        var validationResult = await validator.ValidateAsync(productToUpdate, cancellationToken);
+        var validator = new DeleteProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<UpdateProductCommand>(productToUpdate);
-        var response = await _mediator.Send(command, cancellationToken);
+        var command = _mapper.Map<DeleteProductCommand>(request);
+        await _mediator.Send(command, cancellationToken);
 
-        return Created(string.Empty, new ApiResponseWithData<UpdateProductResponse>
+        return Ok(new ApiResponse
         {
             Success = true,
-            Message = "Product created successfully",
-            Data = _mapper.Map<UpdateProductResponse>(response)
+            Message = "Product deleted successfully"
         });
     }
+
+    [HttpGet("categories")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllCategories(CancellationToken cancellationToken)
+    {
+        var command = new GetAllCategoriesCommand();
+
+        var response = await _mediator.Send(command, cancellationToken);
+
+        var data = response.Category;
+
+        return Ok(data);
+    }
+
 }
