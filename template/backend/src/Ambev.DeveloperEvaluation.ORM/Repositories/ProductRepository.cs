@@ -38,6 +38,6 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _context.Product.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        return await _context.Product.Include(x => x.Rating).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 }
