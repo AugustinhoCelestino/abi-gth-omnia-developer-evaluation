@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart;
+using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetAllCart;
@@ -88,7 +89,7 @@ public class CartController : BaseController
         return Ok(new ApiResponseWithData<GetByIdCartResponse>
         {
             Success = true,
-            Message = "Cart retrieved successfully",
+            Message = "Cart found successfully",
             Data = _mapper.Map<GetByIdCartResponse>(response)
         });
     }

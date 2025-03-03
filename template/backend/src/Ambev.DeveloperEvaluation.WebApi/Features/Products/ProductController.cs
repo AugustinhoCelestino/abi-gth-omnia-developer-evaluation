@@ -6,6 +6,8 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
+using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
@@ -63,6 +65,31 @@ public class ProductController : BaseController
             Success = true,
             Message = "Product created successfully",
             Data = _mapper.Map<CreateProductResponse>(response)
+        });
+    }
+
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetByIdProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdProduct([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var request = new GetByIdProductRequest { Id = id };
+        var validator = new GetByIdProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<GetByIdProductCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<GetByIdProductResponse>
+        {
+            Success = true,
+            Message = "Product found successfully",
+            Data = _mapper.Map<GetByIdProductResponse>(response)
         });
     }
 }

@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart;
+using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;

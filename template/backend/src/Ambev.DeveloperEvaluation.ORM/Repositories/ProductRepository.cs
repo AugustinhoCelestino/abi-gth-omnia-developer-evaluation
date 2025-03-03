@@ -33,4 +33,9 @@ public class ProductRepository : IProductRepository
 
         return model;
     }
+
+    public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Product.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
 }
