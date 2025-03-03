@@ -7,11 +7,12 @@ public class UpdateProductRequestValidator : AbstractValidator<UpdateProductRequ
 {
     public UpdateProductRequestValidator()
     {
-        RuleFor(product => product.Title).NotEmpty().WithMessage("Title is required");
-        RuleFor(product => product.Price).NotEmpty().WithMessage("Price is required");
-        RuleFor(product => product.Description).NotEmpty().WithMessage("Description is required");
-        RuleFor(product => product.Category).NotEmpty().WithMessage("Category is required");
-        RuleFor(product => product.Image).NotEmpty().WithMessage("Category is required");
-        RuleFor(product => product.Rating).SetValidator(new RatingValidator());
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
+        RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required");
+        RuleFor(x => x.Price).NotEmpty().WithMessage("Price is required");
+        RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
+        RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+        RuleFor(x => x.Image).NotEmpty().WithMessage("Category is required");
+        RuleFor(x => x.Rating).SetValidator(new RatingValidator());
     }
 }

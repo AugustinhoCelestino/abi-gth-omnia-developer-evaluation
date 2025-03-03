@@ -25,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.UpdateProduct
 
             var Product = _mapper.Map<Product>(command);
 
-            var createdProduct = await _repository.CreateAsync(Product, cancellationToken);
+            var createdProduct = await _repository.UpdateAsync(Product, cancellationToken);
             var result = _mapper.Map<UpdateProductResult>(createdProduct);
 
             return result;

@@ -35,9 +35,17 @@ public class ProductRepository : IProductRepository
 
         return model;
     }
-
     public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Product.Include(x => x.Rating).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
+    public async Task<Product> UpdateAsync(Product model, CancellationToken cancellationToken = default)
+    {
+        _context.Entry(model).State = EntityState.Modified;
+        _context.Update(model);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return model;
     }
 }

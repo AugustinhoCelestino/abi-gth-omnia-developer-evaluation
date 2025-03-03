@@ -10,6 +10,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
 using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
@@ -102,16 +103,18 @@ public class ProductController : BaseController
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest request, [FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductViewModel request, [FromRoute] int id, CancellationToken cancellationToken)
     {
+        var productToUpdate = _mapper.Map<UpdateProductRequest>(request);
+        productToUpdate.Id = id;
+
         var validator = new UpdateProductRequestValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await validator.ValidateAsync(productToUpdate, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        // TODO: add o ID na request
-        var command = _mapper.Map<UpdateProductCommand>(request);
+        var command = _mapper.Map<UpdateProductCommand>(productToUpdate);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Created(string.Empty, new ApiResponseWithData<UpdateProductResponse>
