@@ -12,5 +12,6 @@ public class GetAllProductFiltredByCategoryProfile : Profile
         CreateMap<GetAllProductFiltredByCategoryRequest, GetAllProductFiltredByCategoryCommand>();
         CreateMap<GetAllProductFiltredByCategoryResult, GetAllProductFiltredByCategoryResponse>();
         CreateMap<RatingViewModel, Rating>();
+        CreateMap<ProductFiltredByCategoryViewModel, GetAllProductFiltredByCategoryRequest>();
     }
 }

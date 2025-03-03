@@ -4,12 +4,15 @@ using Ambev.DeveloperEvaluation.Application.Products.GetAllCategories;
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProductFiltredByCategory;
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
+using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProductFiltredByCategory;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -103,6 +106,7 @@ public class ProductsController : BaseController
         });
     }
 
+
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -126,6 +130,31 @@ public class ProductsController : BaseController
         });
     }
 
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductViewModel request, [FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var productToUpdate = _mapper.Map<UpdateProductRequest>(request);
+        productToUpdate.Id = id;
+
+        var validator = new UpdateProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(productToUpdate, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateProductCommand>(productToUpdate);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Created(string.Empty, new ApiResponseWithData<UpdateProductResponse>
+        {
+            Success = true,
+            Message = "Product updated successfully",
+            Data = _mapper.Map<UpdateProductResponse>(response)
+        });
+    }
+
     [HttpGet("categories")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -143,15 +172,18 @@ public class ProductsController : BaseController
     [HttpGet("categories/{category}")]
     [ProducesResponseType(typeof(PaginatedList<GetAllProductFiltredByCategoryResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllProductFiltredByCategory([FromQuery] GetAllProductFiltredByCategoryRequest request, [FromRoute] string category, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllProductFiltredByCategory([FromQuery] ProductFiltredByCategoryViewModel request, [FromRoute] string category, CancellationToken cancellationToken)
     {
+        var filter = _mapper.Map<GetAllProductFiltredByCategoryRequest>(request);
+        filter.Category = category;
+
         var validator = new GetAllProductFiltredByCategoryRequestValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await validator.ValidateAsync(filter, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetAllProductFiltredByCategoryCommand>(request);
+        var command = _mapper.Map<GetAllProductFiltredByCategoryCommand>(filter);
 
         var response = await _mediator.Send(command, cancellationToken);
 

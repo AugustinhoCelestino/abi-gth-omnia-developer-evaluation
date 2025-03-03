@@ -8,5 +8,6 @@ public class GetAllProductFiltredByCategoryRequestValidator : AbstractValidator<
     {
         RuleFor(c => c.PageNumber).NotEmpty().WithMessage("PageNumber is required");
         RuleFor(c => c.PageSize).NotEmpty().WithMessage("PageNumber is required");
+        RuleFor(c => c.Category).NotEmpty().WithMessage("Category is required");
     }
 }
