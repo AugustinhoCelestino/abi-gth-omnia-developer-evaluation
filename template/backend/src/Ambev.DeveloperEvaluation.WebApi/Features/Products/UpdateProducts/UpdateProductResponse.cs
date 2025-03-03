@@ -1,9 +1,8 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
 
-public class CreateProductResponse
+public class UpdateProductResponse
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
@@ -11,5 +10,5 @@ public class CreateProductResponse
     public string Description { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
-    public RatingViewModel Rating { get; set; } = new RatingViewModel();
+    public Rating Rating { get; set; } = new Rating();
 }

@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
+
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
 
 public class GetAllProductResponse
@@ -8,6 +10,5 @@ public class GetAllProductResponse
     public string? Description { get; set; }
     public string? Category { get; set; }
     public string? Image { get; set; }
-    public decimal Rate { get; set; }
-    public int Count { get; set; }
+    public RatingViewModel? Rating { get; set; }
 }

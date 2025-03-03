@@ -25,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.GetAllProduct
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-            var ProductsList =
+            IEnumerable<Domain.Entities.Product> ProductsList =
                 await _repository.GetAllPaginatedAsync(
                     command.PageNumber,
                     command.PageSize,

@@ -18,6 +18,8 @@ public class ProductRepository : IProductRepository
 
         result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
+        result = result.Include(x => x.Rating);
+
         return await result.ToListAsync();
     }
     public async Task<int> GetTotalCount()

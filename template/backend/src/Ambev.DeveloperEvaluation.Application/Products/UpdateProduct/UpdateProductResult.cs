@@ -1,8 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct
+namespace Ambev.DeveloperEvaluation.Application.Products.UpdateProduct
 {
-    public class CreateProductResult
+    public class UpdateProductResult
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
