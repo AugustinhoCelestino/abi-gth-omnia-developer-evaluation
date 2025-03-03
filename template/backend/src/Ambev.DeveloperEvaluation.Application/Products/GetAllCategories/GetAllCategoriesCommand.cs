@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
-using Ambev.DeveloperEvaluation.Common.Validation;
+﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Products.GetAllCategories

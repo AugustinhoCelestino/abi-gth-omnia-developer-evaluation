@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;

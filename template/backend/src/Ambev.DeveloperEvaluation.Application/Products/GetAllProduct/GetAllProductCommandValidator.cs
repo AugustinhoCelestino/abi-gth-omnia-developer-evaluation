@@ -6,8 +6,8 @@ namespace Ambev.DeveloperEvaluation.Application.Products.GetAllProduct
     {
         public GetAllProductCommandValidator()
         {
-            RuleFor(c => c.PageNumber).NotEmpty().WithMessage("PageNumber is required"); ;
-            RuleFor(c => c.PageSize).NotEmpty().WithMessage("PageSize is required"); ;
+            RuleFor(x => x.PageNumber).NotEmpty().WithMessage("PageNumber is required"); ;
+            RuleFor(x => x.PageSize).NotEmpty().WithMessage("PageSize is required"); ;
         }
     }
 }

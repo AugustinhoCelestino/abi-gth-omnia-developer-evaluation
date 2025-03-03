@@ -15,7 +15,6 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;

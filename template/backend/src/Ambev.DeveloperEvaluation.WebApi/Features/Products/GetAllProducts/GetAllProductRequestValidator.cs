@@ -6,7 +6,7 @@ public class GetAllProductRequestValidator : AbstractValidator<GetAllProductRequ
 {
     public GetAllProductRequestValidator()
     {
-        RuleFor(c => c.PageNumber).NotEmpty().WithMessage("PageNumber is required");
-        RuleFor(c => c.PageSize).NotEmpty().WithMessage("PageNumber is required");
+        RuleFor(x => x.PageNumber).NotEmpty().WithMessage("PageNumber is required");
+        RuleFor(x => x.PageSize).NotEmpty().WithMessage("PageNumber is required");
     }
 }
