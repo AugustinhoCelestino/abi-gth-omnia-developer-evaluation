@@ -9,6 +9,6 @@ public class CreateSaleResponse
     public string Customer { get; set; } = string.Empty;
     public decimal TotalSaleAmount { get; set; }
     public string Branch { get; set; } = string.Empty;
-    public ProductsSaleViewModel Products { get; set; } = new ProductsSaleViewModel();
+    public List<ProductsSoldViewModel> Products { get; set; } = [];
     public bool Cancelled { get; set; }
 }

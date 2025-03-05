@@ -46,6 +46,14 @@ public class CartRepository : ICartRepository
         return await _context.Cart.Include(x => x.CartItems).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
+    public async Task<Cart?> FindAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Cart
+            .Include(x => x.CartItems)
+            .ThenInclude(x => x.Product)
+            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
+
     public async Task<Cart> UpdateAsync(Cart model, CancellationToken cancellationToken = default)
     {
         var modelToUpdate = await GetByIdAsync(model.Id, cancellationToken);

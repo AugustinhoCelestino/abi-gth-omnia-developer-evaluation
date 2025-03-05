@@ -5,11 +5,12 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
     public class CreateSaleResult
     {
         public int Id { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
-        public Rating Rating { get; set; } = new Rating();
+        public int CartId { get; set; }
+        public DateTime Date { get; set; }
+        public string Customer { get; set; } = string.Empty;
+        public string Branch { get; set; } = string.Empty;
+        public bool Cancelled { get; set; }
+        public List<ProductsSold> ProductsSold { get; set; } = [];
+        public decimal TotalSaleAmount { get; set; }
     }
 }
