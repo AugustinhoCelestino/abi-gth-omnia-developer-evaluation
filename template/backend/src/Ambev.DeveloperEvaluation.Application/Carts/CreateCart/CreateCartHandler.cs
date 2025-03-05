@@ -25,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart
 
             var cart = _mapper.Map<Cart>(command);
 
-            var createdCart = await _repository.CreateAsync(cart, cancellationToken);
+            Cart createdCart = await _repository.CreateAsync(cart, cancellationToken);
             var result = _mapper.Map<CreateCartResult>(createdCart);
 
             return result;

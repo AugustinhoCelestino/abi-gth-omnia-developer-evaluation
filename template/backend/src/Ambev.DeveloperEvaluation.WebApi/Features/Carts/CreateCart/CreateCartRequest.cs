@@ -1,5 +1,6 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ViewModel;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
 
@@ -9,5 +10,5 @@ public class CreateCartRequest
 
     public DateTime Date { get; set; }
 
-    public List<CartItem>? CartItem { get; set; }
+    public List<CartItemViewModel>? Products { get; set; }
 }

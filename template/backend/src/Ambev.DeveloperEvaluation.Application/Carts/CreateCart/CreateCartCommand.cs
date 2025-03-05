@@ -10,7 +10,7 @@ public class CreateCartCommand : IRequest<CreateCartResult>
 
     public DateTime Date { get; set; }
 
-    public CartItem Products { get; set; } = new CartItem();
+    public List<CartItem> Products { get; set; } = new List<CartItem>();
 
     public ValidationResultDetail Validate()
     {

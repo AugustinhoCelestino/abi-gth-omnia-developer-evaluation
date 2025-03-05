@@ -1,5 +1,3 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
-
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 
 public class UpdateProductViewModel
