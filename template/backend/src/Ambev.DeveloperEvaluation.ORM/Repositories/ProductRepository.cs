@@ -23,7 +23,7 @@ public class ProductRepository : IProductRepository
 
         result = result.Include(x => x.Rating);
 
-        return await result.ToListAsync();
+        return await result.ToListAsync(cancellationToken: cancellationToken);
     }
     public async Task<int> GetTotalCount()
     {
@@ -44,10 +44,15 @@ public class ProductRepository : IProductRepository
     }
     public async Task<Product> UpdateAsync(Product model, CancellationToken cancellationToken = default)
     {
-        _context.Entry(model).State = EntityState.Modified;
-        _context.Update(model);
+        var modelToUpdate = await GetByIdAsync(model.Id, cancellationToken);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        if (modelToUpdate is not null)
+        {
+            modelToUpdate.Rating = model.Rating;
+            _context.Products.Entry(modelToUpdate).CurrentValues.SetValues(model);
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
         return model;
     }
@@ -65,7 +70,7 @@ public class ProductRepository : IProductRepository
             _context.Products.Select(s => s.Category)
             .Distinct();
 
-        return await result.ToListAsync();
+        return await result.ToListAsync(cancellationToken: cancellationToken);
     }
     public async Task<IEnumerable<Product>> GetAllPaginatedFiltredByCategoryAsync(int pageNumber, int pageSize, string category, CancellationToken cancellationToken = default)
     {
@@ -77,7 +82,7 @@ public class ProductRepository : IProductRepository
 
         result = result.Include(x => x.Rating);
 
-        return await result.ToListAsync();
+        return await result.ToListAsync(cancellationToken: cancellationToken);
     }
 
 }

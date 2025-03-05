@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Application.Products.GetAllProductFiltredByCateg
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;
@@ -106,7 +107,7 @@ public class ProductsController : BaseController
     }
 
     [HttpPut("{id}")]
-    [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductViewModel request, [FromRoute] int id, CancellationToken cancellationToken)
     {
@@ -122,7 +123,7 @@ public class ProductsController : BaseController
         var command = _mapper.Map<UpdateProductCommand>(productToUpdate);
         var response = await _mediator.Send(command, cancellationToken);
 
-        return Created(string.Empty, new ApiResponseWithData<UpdateProductResponse>
+        return Ok(new ApiResponseWithData<UpdateProductResponse>
         {
             Success = true,
             Message = "Product updated successfully",

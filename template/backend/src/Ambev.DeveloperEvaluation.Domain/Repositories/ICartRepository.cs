@@ -9,4 +9,5 @@ public interface ICartRepository
     Task<IEnumerable<Cart>> GetAllPaginatedAsync(int pageNumber, int pageSize, Expression<Func<Cart, object>> orderBy, bool descending, CancellationToken cancellationToken = default);
     Task<Cart?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<int> GetTotalCount();
+    Task<Cart> UpdateAsync(Cart model, CancellationToken cancellationToken = default);
 }

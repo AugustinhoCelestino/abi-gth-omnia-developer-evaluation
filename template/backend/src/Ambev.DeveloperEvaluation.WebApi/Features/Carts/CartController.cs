@@ -1,10 +1,12 @@
 using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart;
+using Ambev.DeveloperEvaluation.Application.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateCart;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +91,31 @@ public class CartController : BaseController
             Success = true,
             Message = "Cart found successfully",
             Data = _mapper.Map<GetByIdCartResponse>(response)
+        });
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateCartResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateCart([FromBody] UpdateCartViewModel request, [FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var CartToUpdate = _mapper.Map<UpdateCartRequest>(request);
+        CartToUpdate.Id = id;
+
+        var validator = new UpdateCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(CartToUpdate, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateCartCommand>(CartToUpdate);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<UpdateCartResponse>
+        {
+            Success = true,
+            Message = "Cart updated successfully",
+            Data = _mapper.Map<UpdateCartResponse>(response)
         });
     }
 }
