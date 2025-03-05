@@ -6,7 +6,6 @@ using Ambev.DeveloperEvaluation.Application.Products.GetAllProductFiltredByCateg
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
-using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProduct;

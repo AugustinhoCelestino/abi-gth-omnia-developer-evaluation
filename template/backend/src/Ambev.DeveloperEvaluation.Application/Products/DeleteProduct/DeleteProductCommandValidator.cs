@@ -8,7 +8,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.DeleteProduct
         {
             RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage("User ID is required");
+            .WithMessage("Product ID is required");
         }
     }
 }

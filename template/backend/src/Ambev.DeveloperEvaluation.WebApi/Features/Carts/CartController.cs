@@ -1,9 +1,11 @@
 using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
+using Ambev.DeveloperEvaluation.Application.Carts.DeleteCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart;
 using Ambev.DeveloperEvaluation.Application.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.DeleteCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateCart;
@@ -116,6 +118,29 @@ public class CartController : BaseController
             Success = true,
             Message = "Cart updated successfully",
             Data = _mapper.Map<UpdateCartResponse>(response)
+        });
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteCart([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var request = new DeleteCartRequest { Id = id };
+
+        var validator = new DeleteCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<DeleteCartCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "Cart deleted successfully"
         });
     }
 }

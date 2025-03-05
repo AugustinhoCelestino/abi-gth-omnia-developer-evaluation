@@ -61,4 +61,13 @@ public class CartRepository : ICartRepository
         return model;
     }
 
+    public async Task<bool> DeleteAsync(Cart model, CancellationToken cancellationToken = default)
+    {
+        _context.Cart.Remove(model);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
+
 }
