@@ -15,6 +15,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Mapping
 
             builder.Property(u => u.UserId);
             builder.Property(u => u.Date);
+            builder.Property(u => u.WasSold);
         }
     }
 }

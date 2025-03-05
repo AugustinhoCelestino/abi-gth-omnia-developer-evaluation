@@ -3,6 +3,7 @@ using System;
 using Ambev.DeveloperEvaluation.ORM;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20250305192955_Sales")]
+    partial class Sales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,41 +104,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
-                });
-
-            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.ProductsSold", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Discont")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("ProductsSolds", (string)null);
                 });
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Rating", b =>
@@ -282,25 +250,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.ProductsSold", b =>
-                {
-                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Rating", b =>
