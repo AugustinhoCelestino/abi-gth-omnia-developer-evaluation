@@ -1,7 +1,6 @@
 using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetAllCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetByIdCart;
-using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetAllCart;
@@ -9,7 +8,6 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts;
 

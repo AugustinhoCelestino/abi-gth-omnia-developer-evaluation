@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ViewModel;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.GetByIdCart;
 
@@ -10,6 +10,6 @@ public class GetByIdCartResponse
 
     public DateTime Date { get; set; }
 
-    public CartItem? Products { get; set; }
+    public List<CartItemViewModel>? Products { get; set; }
 
 }
