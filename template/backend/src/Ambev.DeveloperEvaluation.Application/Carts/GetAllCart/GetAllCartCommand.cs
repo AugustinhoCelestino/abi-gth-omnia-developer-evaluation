@@ -10,6 +10,8 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 
         public int PageSize { get; set; } = 10;
 
+        public string OrderBy { get; set; } = string.Empty;
+
         public ValidationResultDetail Validate()
         {
             var validator = new GetAllCartCommandValidator();

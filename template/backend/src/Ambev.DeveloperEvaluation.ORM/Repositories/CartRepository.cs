@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -12,11 +13,15 @@ public class CartRepository : ICartRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Cart>> GetAllPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Cart>> GetAllPaginatedAsync(int pageNumber, int pageSize, Expression<Func<Cart, object>> orderBy, bool descending = false, CancellationToken cancellationToken = default)
     {
         var result = _context.Cart.AsNoTracking().AsQueryable();
 
+        result = descending ? result.OrderByDescending(orderBy) : result.OrderBy(orderBy);
+
         result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+        result = result.Include(x => x.CartItems);
 
         return await result.ToListAsync();
     }

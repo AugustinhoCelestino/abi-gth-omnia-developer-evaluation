@@ -10,6 +10,6 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetAllCart
 
         public DateTime Date { get; set; }
 
-        public CartItem? Products { get; set; }
+        public List<CartItem>? CartItems { get; set; }
     }
 }

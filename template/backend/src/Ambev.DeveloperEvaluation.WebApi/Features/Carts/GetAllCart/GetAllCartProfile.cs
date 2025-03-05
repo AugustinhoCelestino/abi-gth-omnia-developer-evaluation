@@ -8,6 +8,9 @@ public class GetAllCartProfile : Profile
     public GetAllCartProfile()
     {
         CreateMap<GetAllCartRequest, GetAllCartCommand>();
-        CreateMap<GetAllCartResult, GetAllCartResponse>();
+        CreateMap<GetAllCartResult, GetAllCartResponse>()
+            .ForMember(
+            CartResult => CartResult.Products,
+            CartResponse => CartResponse.MapFrom(r => r.CartItems)); 
     }
 }
