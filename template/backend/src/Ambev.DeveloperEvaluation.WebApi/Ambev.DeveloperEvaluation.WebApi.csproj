@@ -12,13 +12,9 @@
 
   <ItemGroup>
     <Compile Remove="Features\Users\ListUsers\**" />
-    <Compile Remove="Features\Users\UpdateUser\**" />
     <Content Remove="Features\Users\ListUsers\**" />
-    <Content Remove="Features\Users\UpdateUser\**" />
     <EmbeddedResource Remove="Features\Users\ListUsers\**" />
-    <EmbeddedResource Remove="Features\Users\UpdateUser\**" />
     <None Remove="Features\Users\ListUsers\**" />
-    <None Remove="Features\Users\UpdateUser\**" />
   </ItemGroup>
 
   <ItemGroup>

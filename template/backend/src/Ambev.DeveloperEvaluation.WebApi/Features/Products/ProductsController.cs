@@ -5,8 +5,6 @@ using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProductFiltredByCategory;
 using Ambev.DeveloperEvaluation.Application.Products.GetByIdProduct;
 using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
-using Ambev.DeveloperEvaluation.Application.Users.GetAllUser;
-using Ambev.DeveloperEvaluation.Application.Users.GetByIdUser;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProducts;
@@ -15,7 +13,6 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetAllProductFiltredByC
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetByIdProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.GetByIdUser;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

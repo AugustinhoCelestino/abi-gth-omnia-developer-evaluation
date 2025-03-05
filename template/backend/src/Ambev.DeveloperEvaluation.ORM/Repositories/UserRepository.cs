@@ -42,6 +42,19 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
+    public async Task<User> UpdateAsync(User model, CancellationToken cancellationToken = default)
+    {
+        var modelToUpdate = await GetByIdAsync(model.Id, cancellationToken);
+
+        if (modelToUpdate is not null)
+        {
+            _context.Users.Entry(modelToUpdate).CurrentValues.SetValues(model);
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        return model;
+    }
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await GetByIdAsync(id, cancellationToken);

@@ -1,14 +1,15 @@
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.ViewModel;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
-public class CreateUserProfile : Profile
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
+
+public class UpdateUserProfile : Profile
 {
-    public CreateUserProfile()
+    public UpdateUserProfile()
     {
-        CreateMap<CreateUserRequest, CreateUserCommand>()
-            .ForMember(user => user.Firstname, userRequest => userRequest.MapFrom(ur => ur.Name.FirstName))
+        CreateMap<UpdateUserRequest, UpdateUserCommand>()
+                        .ForMember(user => user.Firstname, userRequest => userRequest.MapFrom(ur => ur.Name.FirstName))
             .ForMember(user => user.Lastname, userRequest => userRequest.MapFrom(ur => ur.Name.LastName))
             .ForMember(user => user.City, userRequest => userRequest.MapFrom(ur => ur.Address.City))
             .ForMember(user => user.Street, userRequest => userRequest.MapFrom(ur => ur.Address.Street))
@@ -17,8 +18,7 @@ public class CreateUserProfile : Profile
             .ForMember(user => user.Lat, userRequest => userRequest.MapFrom(ur => ur.Address.Geolocation.Lat))
             .ForMember(user => user.Long, userRequest => userRequest.MapFrom(ur => ur.Address.Geolocation.Long))
             ;
-
-        CreateMap<CreateUserResult, CreateUserResponse>()
+        CreateMap<UpdateUserResult, UpdateUserResponse>()
             .ForMember(response => response.Name, result => result.MapFrom(r =>
                 new UserNameViewModel
                 {
@@ -36,8 +36,9 @@ public class CreateUserProfile : Profile
                     {
                         Lat = r.Lat,
                         Long = r.Long
-                    } 
-                }))
-            ;
+                    }
+                }));
+
+        CreateMap<UpdateUserViewModel, UpdateUserRequest>();
     }
 }

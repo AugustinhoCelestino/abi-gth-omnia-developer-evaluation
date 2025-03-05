@@ -1,11 +1,13 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
+﻿using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 
-public class CreateUserCommand : IRequest<CreateUserResult>
+public class UpdateUserCommand : IRequest<UpdateUserResult>
 {
+    public Guid Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
@@ -23,7 +25,7 @@ public class CreateUserCommand : IRequest<CreateUserResult>
 
     public ValidationResultDetail Validate()
     {
-        var validator = new CreateUserCommandValidator();
+        var validator = new UpdateUserCommandValidator();
         var result = validator.Validate(this);
         return new ValidationResultDetail
         {

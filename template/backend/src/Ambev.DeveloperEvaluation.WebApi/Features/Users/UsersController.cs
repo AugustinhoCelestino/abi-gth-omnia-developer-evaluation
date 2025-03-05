@@ -2,11 +2,14 @@
 using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.Application.Users.GetAllUser;
 using Ambev.DeveloperEvaluation.Application.Users.GetByIdUser;
+using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.GetAllUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.GetByIdUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.ViewModel;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -91,6 +94,31 @@ public class UsersController : BaseController
             Success = true,
             Message = "User found successfully",
             Data = _mapper.Map<GetByIdUserResponse>(response)
+        });
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserViewModel request, [FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var UserToUpdate = _mapper.Map<UpdateUserRequest>(request);
+        UserToUpdate.Id = id;
+
+        var validator = new UpdateUserRequestValidator();
+        var validationResult = await validator.ValidateAsync(UserToUpdate, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateUserCommand>(UserToUpdate);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<UpdateUserResponse>
+        {
+            Success = true,
+            Message = "User updated successfully",
+            Data = _mapper.Map<UpdateUserResponse>(response)
         });
     }
 
