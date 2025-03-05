@@ -11,9 +11,6 @@ using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 
-/// <summary>
-/// Controller for managing user operations
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : BaseController
@@ -21,23 +18,12 @@ public class UsersController : BaseController
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    /// <summary>
-    /// Initializes a new instance of UsersController
-    /// </summary>
-    /// <param name="mediator">The mediator instance</param>
-    /// <param name="mapper">The AutoMapper instance</param>
     public UsersController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
     }
 
-    /// <summary>
-    /// Creates a new user
-    /// </summary>
-    /// <param name="request">The user creation request</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The created user details</returns>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateUserResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -60,12 +46,6 @@ public class UsersController : BaseController
         });
     }
 
-    /// <summary>
-    /// Retrieves a user by their ID
-    /// </summary>
-    /// <param name="id">The unique identifier of the user</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The user details if found</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<GetUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -90,12 +70,6 @@ public class UsersController : BaseController
         });
     }
 
-    /// <summary>
-    /// Deletes a user by their ID
-    /// </summary>
-    /// <param name="id">The unique identifier of the user to delete</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Success response if the user was deleted</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
