@@ -1,23 +1,19 @@
+using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
-
-/// <summary>
-/// Command for deleting a user
-/// </summary>
-public record DeleteUserCommand : IRequest<DeleteUserResponse>
+public record DeleteUserCommand : IRequest<DeleteUserResult>
 {
-    /// <summary>
-    /// The unique identifier of the user to delete
-    /// </summary>
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
-    /// <summary>
-    /// Initializes a new instance of DeleteUserCommand
-    /// </summary>
-    /// <param name="id">The ID of the user to delete</param>
-    public DeleteUserCommand(Guid id)
+    public ValidationResultDetail Validate()
     {
-        Id = id;
+        var validator = new DeleteUserCommandValidator();
+        var result = validator.Validate(this);
+        return new ValidationResultDetail
+        {
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
+        };
     }
 }

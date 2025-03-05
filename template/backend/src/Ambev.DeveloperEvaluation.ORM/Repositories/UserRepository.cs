@@ -55,14 +55,12 @@ public class UserRepository : IUserRepository
 
         return model;
     }
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(User model, CancellationToken cancellationToken = default)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
-        if (user == null)
-            return false;
+        _context.Users.Remove(model);
 
-        _context.Users.Remove(user);
         await _context.SaveChangesAsync(cancellationToken);
+
         return true;
     }
 }
