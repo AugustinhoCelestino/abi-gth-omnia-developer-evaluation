@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Products.GetAllProduct;
+using Ambev.DeveloperEvaluation.Application.Users.GetAllUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ViewModels;
 using AutoMapper;

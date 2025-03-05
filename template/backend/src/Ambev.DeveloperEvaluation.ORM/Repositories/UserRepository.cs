@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 public class UserRepository : IUserRepository
@@ -9,6 +10,22 @@ public class UserRepository : IUserRepository
     public UserRepository(DefaultContext context)
     {
         _context = context;
+    }
+    public async Task<IEnumerable<User>> GetAllPaginatedAsync(int pageNumber, int pageSize, Expression<Func<User, object>> orderBy, bool descending = false, CancellationToken cancellationToken = default)
+    {
+        var result = _context.Users.AsNoTracking().AsQueryable();
+
+        result = descending ? result.OrderByDescending(orderBy) : result.OrderBy(orderBy);
+
+        result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+        return await result.ToListAsync(cancellationToken: cancellationToken);
+    }
+    public async Task<int> GetTotalCount()
+    {
+        var result = _context.Users.AsQueryable();
+
+        return await result.CountAsync();
     }
     public async Task<User> CreateAsync(User user, CancellationToken cancellationToken = default)
     {

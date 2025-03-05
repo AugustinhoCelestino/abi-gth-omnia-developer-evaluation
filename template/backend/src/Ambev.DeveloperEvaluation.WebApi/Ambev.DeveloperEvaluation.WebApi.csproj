@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Users\DeleteUser\" />
+    <Folder Include="Features\Users\NovaPasta\" />
   </ItemGroup>
 
 </Project>
